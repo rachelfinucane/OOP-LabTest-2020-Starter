@@ -81,6 +81,9 @@ public class Gantt extends PApplet
 		boolean leftSelected = false;
 		boolean rightSelected = false;
 		println("Mouse pressed");	
+
+		// rStart = map(tasks.get(i).getStartDate(), 1, 30, leftMargin, width - margin); //leftx
+		// 	rEnd = map(tasks.get(i).getEndDate(), 1, 30, leftMargin, width - margin); //rightx
 		//for loop to check if the mouse was clicked next to any task
 			// if mouseY is between y1 and y2 and 
 				//if MouseX is +- 20 px from tx1
@@ -96,22 +99,23 @@ public class Gantt extends PApplet
 			Task task = tasks.get(i);
 			tx1 = map(task.getStartDate(), 1, 30, leftMargin, width - margin);
 			tx2 = map(task.getEndDate(), 1, 30, leftMargin, width - margin);
-			ty1 = map(i, 0, tasks.size(), 2 * margin, height - margin);
-			ty2 = map(i, 0, tasks.size(), 2 * margin, height - margin) + rHeight;
+			ty1 = map(i, 0, tasks.size(), 2 * margin, height - margin) - rHeight / 2;
+			ty2 = ty1 + rHeight;
 
 			if(mouseY >= ty1 && mouseY <= ty2)
 			{
-				if(mouseX > tx1 + 20 || mouseX < tx1 + 20)
+				println("true");
+				if(mouseX < tx1 + 20 && mouseX > tx1 - 20)
 				{
-					println("right");
-					rightSelected = true;
-					leftSelected = false;
-				}
-				else if(mouseX > tx2 + 20 || mouseX < tx2 + 20)
-				{
-					println("left");
-					leftSelected = true;
+					println("left" + i);
 					rightSelected = false;
+					leftSelected = true;
+				}
+				else if(mouseX < tx2 + 20 && mouseX > tx2 - 20)
+				{
+					println("right" + i);
+					leftSelected = false;
+					rightSelected = true;
 				}
 			}
 		}
