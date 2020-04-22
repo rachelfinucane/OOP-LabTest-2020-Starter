@@ -54,7 +54,6 @@ public class Gantt extends PApplet
 		{
 			x = map(i, 1, 30, leftMargin, width - margin);
 			line(x, margin, x, height - margin);
-
 			text(i, x, margin * 0.8f);
 		}
 
@@ -93,16 +92,13 @@ public class Gantt extends PApplet
 
 			if(mouseY >= ty1 && mouseY <= ty2)
 			{
-				println("true");
 				if(mouseX < tx1 + 20 && mouseX > tx1 - 20)
 				{
-					println("left" + i);
-					rightSelected = -1;
 					leftSelected = i;
+					rightSelected = -1;
 				}
 				else if(mouseX < tx2 + 20 && mouseX > tx2 - 20)
 				{
-					println("right" + i);
 					leftSelected = -1;
 					rightSelected = i;
 				}
@@ -114,19 +110,32 @@ public class Gantt extends PApplet
 	{
 		int date;
 		println("Mouse dragged");
+
 		if(leftSelected > -1)
 		{
 			Task task = tasks.get(leftSelected);
 			date = (int) map(mouseX, 0, width, 0, 30);
-			if 
-			task.setStartDate(date);
+			if(date > 0 && date < task.getEndDate() && task.getEndDate() - date >= 1) 
+			{
+				task.setStartDate(date);
+			}
+			
 		}
 		else if(rightSelected > -1)
 		{
 			Task task = tasks.get(rightSelected);
 			date = (int) map(mouseX, 0, width, 0, 30);
-			task.setEndDate(date);
+			if(date <= 30 && date > task.getStartDate() && date - task.getStartDate() >= 1)
+			{
+				task.setEndDate(date);
+			}
 		}
+	}
+
+	public void mouseReleased()
+	{
+		leftSelected = -1;
+		rightSelected = -1;
 	}
 	
 	public void setup() 
