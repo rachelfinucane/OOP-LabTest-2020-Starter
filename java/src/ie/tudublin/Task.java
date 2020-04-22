@@ -44,6 +44,12 @@ public class Task
         this(tr.getString("Task"), tr.getInt("Start"), tr.getInt("End"));
         
     }
+
+    @Override
+    public String toString() {
+        // return "Task [endDate=" + endDate + ", name=" + name + ", startDate=" + startDate + "]";
+        return "Task Name: " + name + " Start Date: " + startDate + " End Date: " + endDate;
+    }
     
 
 }
