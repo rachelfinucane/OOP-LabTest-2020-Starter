@@ -45,6 +45,7 @@ public class Gantt extends PApplet
 		float rHeight = 50;
 		float rStart, rEnd, rWidth;
 		float color;
+		float radius = 6;
 
 		stroke(255);
 		fill(255);
@@ -60,7 +61,7 @@ public class Gantt extends PApplet
 		for(int i = 0; i < tasks.size(); i++)
 		{
 			fill(255);
-			y = map(i, 0, tasks.size(), 2 * margin, height - margin);
+			y = map(i, 0, tasks.size(), 2 * margin, height - margin); // centre of rectangle
 			text(tasks.get(i).getName(), margin, y);
 
 			noStroke();
@@ -71,14 +72,14 @@ public class Gantt extends PApplet
 			rEnd = map(tasks.get(i).getEndDate(), 1, 30, leftMargin, width - margin);
 			rWidth = rEnd - rStart;
 
-			rect(rStart, y - rHeight / 2, rWidth, rHeight);
+			rect(rStart, y - rHeight / 2, rWidth, rHeight, radius); 
 		}
 	}
 	
 	public void mousePressed()
 	{
 		float rHeight = 50;
-		float tx1, tx2, ty1, ty2;
+		float tx1, tx2, ty1, ty2; // left x, right x, top y, bottom y
 		
 		println("Mouse pressed");	
 
