@@ -9,6 +9,8 @@ import processing.data.TableRow;
 public class Gantt extends PApplet
 {	
 	public ArrayList<Task> tasks = new ArrayList<Task>();
+	private float leftMargin;
+	private float margin;
 
 	public void settings()
 	{
@@ -36,8 +38,6 @@ public class Gantt extends PApplet
 
 	public void displayTasks()
 	{
-		float leftMargin = width / 6;
-		float margin = width / 20;
 		int numDays = 30;
 		float x, y;
 		float rHeight = 50;
@@ -76,7 +76,45 @@ public class Gantt extends PApplet
 	
 	public void mousePressed()
 	{
+		float rHeight = 50;
+		float tx1, tx2, ty1, ty2;
+		boolean leftSelected = false;
+		boolean rightSelected = false;
 		println("Mouse pressed");	
+		//for loop to check if the mouse was clicked next to any task
+			// if mouseY is between y1 and y2 and 
+				//if MouseX is +- 20 px from tx1
+					//selected = 1
+				//if Mouse X is +- 20 px from tx2
+					//selected = 2
+				//else
+					//selected = 0
+			// else selected = 0
+
+		for(int i = 0; i < tasks.size(); i++)
+		{
+			Task task = tasks.get(i);
+			tx1 = map(task.getStartDate(), 1, 30, leftMargin, width - margin);
+			tx2 = map(task.getEndDate(), 1, 30, leftMargin, width - margin);
+			ty1 = map(i, 0, tasks.size(), 2 * margin, height - margin);
+			ty2 = map(i, 0, tasks.size(), 2 * margin, height - margin) + rHeight;
+
+			if(mouseY >= ty1 && mouseY <= ty2)
+			{
+				if(mouseX > tx1 + 20 || mouseX < tx1 + 20)
+				{
+					println("right");
+					rightSelected = true;
+					leftSelected = false;
+				}
+				else if(mouseX > tx2 + 20 || mouseX < tx2 + 20)
+				{
+					println("left");
+					leftSelected = true;
+					rightSelected = false;
+				}
+			}
+		}
 	}
 
 	public void mouseDragged()
@@ -88,9 +126,10 @@ public class Gantt extends PApplet
 	
 	public void setup() 
 	{
+		leftMargin = width / 6;
+		margin = width / 20;
 		loadTasks();
 		printTasks();
-		
 	}
 	
 	public void draw()
