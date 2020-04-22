@@ -11,6 +11,8 @@ public class Gantt extends PApplet
 	public ArrayList<Task> tasks = new ArrayList<Task>();
 	private float leftMargin;
 	private float margin;
+	private int leftSelected = -1;
+	private int rightSelected = -1;
 
 	public void settings()
 	{
@@ -78,21 +80,8 @@ public class Gantt extends PApplet
 	{
 		float rHeight = 50;
 		float tx1, tx2, ty1, ty2;
-		boolean leftSelected = false;
-		boolean rightSelected = false;
+		
 		println("Mouse pressed");	
-
-		// rStart = map(tasks.get(i).getStartDate(), 1, 30, leftMargin, width - margin); //leftx
-		// 	rEnd = map(tasks.get(i).getEndDate(), 1, 30, leftMargin, width - margin); //rightx
-		//for loop to check if the mouse was clicked next to any task
-			// if mouseY is between y1 and y2 and 
-				//if MouseX is +- 20 px from tx1
-					//selected = 1
-				//if Mouse X is +- 20 px from tx2
-					//selected = 2
-				//else
-					//selected = 0
-			// else selected = 0
 
 		for(int i = 0; i < tasks.size(); i++)
 		{
@@ -108,14 +97,14 @@ public class Gantt extends PApplet
 				if(mouseX < tx1 + 20 && mouseX > tx1 - 20)
 				{
 					println("left" + i);
-					rightSelected = false;
-					leftSelected = true;
+					rightSelected = -1;
+					leftSelected = i;
 				}
 				else if(mouseX < tx2 + 20 && mouseX > tx2 - 20)
 				{
 					println("right" + i);
-					leftSelected = false;
-					rightSelected = true;
+					leftSelected = -1;
+					rightSelected = i;
 				}
 			}
 		}
@@ -123,10 +112,22 @@ public class Gantt extends PApplet
 
 	public void mouseDragged()
 	{
+		int date;
 		println("Mouse dragged");
+		if(leftSelected > -1)
+		{
+			Task task = tasks.get(leftSelected);
+			date = (int) map(mouseX, 0, width, 0, 30);
+			if 
+			task.setStartDate(date);
+		}
+		else if(rightSelected > -1)
+		{
+			Task task = tasks.get(rightSelected);
+			date = (int) map(mouseX, 0, width, 0, 30);
+			task.setEndDate(date);
+		}
 	}
-
-	
 	
 	public void setup() 
 	{
