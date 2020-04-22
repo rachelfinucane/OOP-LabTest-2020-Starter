@@ -80,6 +80,7 @@ public class Gantt extends PApplet
 	{
 		float rHeight = 50;
 		float tx1, tx2, ty1, ty2; // left x, right x, top y, bottom y
+		float pixels = 20;
 		
 		println("Mouse pressed");	
 
@@ -93,12 +94,12 @@ public class Gantt extends PApplet
 
 			if(mouseY >= ty1 && mouseY <= ty2)
 			{
-				if(mouseX < tx1 + 20 && mouseX > tx1 - 20)
+				if(mouseX < tx1 + pixels && mouseX > tx1 - pixels)
 				{
 					leftSelected = i;
 					rightSelected = -1;
 				}
-				else if(mouseX < tx2 + 20 && mouseX > tx2 - 20)
+				else if(mouseX < tx2 + pixels && mouseX > tx2 - pixels)
 				{
 					leftSelected = -1;
 					rightSelected = i;
