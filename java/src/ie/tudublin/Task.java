@@ -48,7 +48,7 @@ public class Task
     @Override
     public String toString() {
         // return "Task [endDate=" + endDate + ", name=" + name + ", startDate=" + startDate + "]";
-        return "Task Name: " + name + " Start Date: " + startDate + " End Date: " + endDate;
+        return "Task Name: " + name + ", Start Date: " + startDate + ", End Date: " + endDate;
     }
     
 
